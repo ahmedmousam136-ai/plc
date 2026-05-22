@@ -334,6 +334,153 @@
     }
 
     /* ═══════════════════════════════════════════
+       PRODUCT SLIDER
+    ═══════════════════════════════════════════ */
+    .product-slider-section {
+      background: var(--navy);
+      overflow: hidden;
+      position: relative;
+    }
+    .product-slider-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 420px 1fr;
+      align-items: center;
+      min-height: 420px;
+    }
+    /* Static text panel */
+    .slider-text-panel {
+      padding: 56px 44px 56px 40px;
+      position: relative;
+      z-index: 2;
+      flex-shrink: 0;
+    }
+    .slider-text-panel .stp-tag {
+      display: inline-block;
+      font-size: 0.65rem;
+      font-weight: 800;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--orange);
+      background: rgba(245,166,35,0.12);
+      border: 1px solid rgba(245,166,35,0.32);
+      padding: 4px 12px;
+      border-radius: 3px;
+      margin-bottom: 18px;
+    }
+    .slider-text-panel h2 {
+      font-family: 'Montserrat', sans-serif;
+      font-size: clamp(1.45rem, 2.6vw, 2rem);
+      font-weight: 900;
+      color: #fff;
+      line-height: 1.2;
+      text-transform: uppercase;
+      letter-spacing: -0.01em;
+    }
+    .slider-text-panel h2 span { color: var(--orange); }
+    .slider-text-panel .stp-divider {
+      width: 48px; height: 4px;
+      background: var(--orange);
+      border-radius: 2px;
+      margin: 20px 0 0;
+    }
+    /* Dots */
+    .slider-dots {
+      display: flex;
+      gap: 8px;
+      margin-top: 24px;
+    }
+    .slider-dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.25);
+      border: none;
+      cursor: pointer;
+      padding: 0;
+      transition: background 0.25s, transform 0.2s;
+    }
+    .slider-dot.active {
+      background: var(--orange);
+      transform: scale(1.35);
+    }
+    /* Image track */
+    .slider-image-panel {
+      position: relative;
+      overflow: hidden;
+      height: 420px;
+    }
+    .slider-track {
+      display: flex;
+      height: 100%;
+      transition: transform 0.72s cubic-bezier(0.77,0,0.18,1);
+      will-change: transform;
+    }
+    .slider-slide {
+      flex: 0 0 100%;
+      height: 100%;
+      position: relative;
+    }
+    .slider-slide img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      display: block;
+    }
+    /* subtle dark fade on left edge to blend into text panel */
+    .slider-image-panel::before {
+      content: '';
+      position: absolute;
+      left: 0; top: 0; bottom: 0;
+      width: 80px;
+      background: linear-gradient(to right, var(--navy) 0%, transparent 100%);
+      z-index: 3;
+      pointer-events: none;
+    }
+    /* Nav arrows */
+    .slider-arrow {
+      position: absolute;
+      top: 50%; transform: translateY(-50%);
+      z-index: 4;
+      background: rgba(13,27,46,0.72);
+      border: 1.5px solid rgba(245,166,35,0.45);
+      color: var(--orange);
+      width: 38px; height: 38px;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer;
+      transition: background 0.18s, border-color 0.18s;
+      font-size: 1.1rem;
+      line-height: 1;
+    }
+    .slider-arrow:hover { background: var(--orange); color: var(--navy); border-color: var(--orange); }
+    .slider-arrow.prev { right: 52px; }
+    .slider-arrow.next { right: 8px; }
+
+    @media (max-width: 860px) {
+      .product-slider-inner {
+        grid-template-columns: 1fr;
+        min-height: auto;
+      }
+      .slider-text-panel {
+        padding: 36px 20px 28px;
+        text-align: center;
+      }
+      .slider-text-panel .stp-divider { margin: 16px auto 0; }
+      .slider-dots { justify-content: center; }
+      .slider-image-panel {
+        height: 260px;
+      }
+      .slider-image-panel::before { display: none; }
+      .slider-arrow.prev { right: 54px; }
+      .slider-arrow.next { right: 10px; }
+    }
+    @media (max-width: 480px) {
+      .slider-image-panel { height: 210px; }
+    }
+
+    /* ═══════════════════════════════════════════
        SECTION COMMONS
     ═══════════════════════════════════════════ */
     .section { padding: 80px 40px; }
@@ -962,6 +1109,44 @@
   </div>
 
   <!-- ═══════════════════════════════════════════
+       PRODUCT SLIDER
+  ═══════════════════════════════════════════ -->
+  <div class="product-slider-section">
+    <div class="product-slider-inner">
+
+      <!-- Static text panel — never moves -->
+      <div class="slider-text-panel">
+        <div class="stp-tag">Our Product Range</div>
+        <h2>From PLCs to<br>Power Supplies —<br><span>Complete Automation</span><br>Solutions Under<br>One Roof</h2>
+        <div class="stp-divider"></div>
+        <div class="slider-dots" id="sliderDots">
+          <button class="slider-dot active" onclick="goToSlide(0)" aria-label="Slide 1"></button>
+          <button class="slider-dot" onclick="goToSlide(1)" aria-label="Slide 2"></button>
+          <button class="slider-dot" onclick="goToSlide(2)" aria-label="Slide 3"></button>
+        </div>
+      </div>
+
+      <!-- Sliding image panel -->
+      <div class="slider-image-panel">
+        <div class="slider-track" id="sliderTrack">
+          <div class="slider-slide">
+            <img src="1779412832233_image.png" alt="PLC and automation systems" />
+          </div>
+          <div class="slider-slide">
+            <img src="1779412843521_image.png" alt="Industrial contactors" />
+          </div>
+          <div class="slider-slide">
+            <img src="1779412853968_image.png" alt="Control components" />
+          </div>
+        </div>
+        <button class="slider-arrow prev" onclick="prevSlide()" aria-label="Previous">&#8592;</button>
+        <button class="slider-arrow next" onclick="nextSlide()" aria-label="Next">&#8594;</button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════
        OUR BRANDS
   ═══════════════════════════════════════════ -->
   <section class="section" id="brands">
@@ -1454,6 +1639,25 @@
     document.addEventListener('keydown', function(e) {
       if (e.key === 'Escape') closeMSMEModal();
     });
+
+    /* ── Product Slider ── */
+    var sliderCurrent = 0;
+    var sliderTotal = 3;
+    var sliderTimer = null;
+
+    function goToSlide(index) {
+      sliderCurrent = (index + sliderTotal) % sliderTotal;
+      document.getElementById('sliderTrack').style.transform = 'translateX(-' + (sliderCurrent * 100) + '%)';
+      var dots = document.querySelectorAll('.slider-dot');
+      dots.forEach(function(d, i) { d.classList.toggle('active', i === sliderCurrent); });
+    }
+    function nextSlide() { goToSlide(sliderCurrent + 1); resetSliderTimer(); }
+    function prevSlide() { goToSlide(sliderCurrent - 1); resetSliderTimer(); }
+    function resetSliderTimer() {
+      clearInterval(sliderTimer);
+      sliderTimer = setInterval(function() { goToSlide(sliderCurrent + 1); }, 4000);
+    }
+    resetSliderTimer();
   </script>
 
 </body>
