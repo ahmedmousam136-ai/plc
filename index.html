@@ -50,7 +50,7 @@
     .navbar {
       position: sticky;
       top: 0;
-      z-index: 100;
+      z-index: 500;
       background: var(--navy);
       display: flex;
       align-items: center;
@@ -83,7 +83,7 @@
       gap: 36px;
       align-items: center;
     }
-    .nav-links a {
+    .nav-links > li > a {
       color: rgba(255,255,255,0.82);
       font-size: 0.82rem;
       font-weight: 700;
@@ -91,8 +91,11 @@
       text-transform: uppercase;
       transition: color 0.15s;
       position: relative;
+      display: flex;
+      align-items: center;
+      gap: 5px;
     }
-    .nav-links a::after {
+    .nav-links > li > a::after {
       content: '';
       position: absolute;
       bottom: -4px; left: 0; right: 0;
@@ -101,14 +104,22 @@
       transform: scaleX(0);
       transition: transform 0.18s;
     }
-    .nav-links a:hover { color: #fff; }
-    .nav-links a:hover::after { transform: scaleX(1); }
-    .nav-links .nav-dropdown { position: relative; }
-    .nav-links .nav-dropdown > a::after { display: none; }
-    .nav-links .nav-dropdown > a {
-      display: flex; align-items: center; gap: 4px;
+    .nav-links > li > a:hover,
+    .nav-links > li.mega-open > a { color: #fff; }
+    .nav-links > li > a:hover::after,
+    .nav-links > li.mega-open > a::after { transform: scaleX(1); }
+
+    /* chevron icon in Products link */
+    .nav-links .mega-parent > a svg {
+      width: 12px; height: 12px; flex-shrink: 0;
+      transition: transform 0.22s;
     }
-    .nav-links .nav-dropdown > a svg { width: 12px; height: 12px; }
+    .nav-links .mega-parent.mega-open > a svg {
+      transform: rotate(180deg);
+    }
+    /* suppress underline bar on mega trigger */
+    .nav-links .mega-parent > a::after { display: none; }
+
     .nav-hamburger {
       display: none;
       background: none;
@@ -118,6 +129,81 @@
       padding: 4px;
     }
     .nav-hamburger svg { width: 26px; height: 26px; }
+
+    /* ── MEGA DROPDOWN (desktop) ── */
+    .mega-menu {
+      display: none;
+      position: absolute;
+      top: 60px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: min(1080px, 96vw);
+      background: var(--navy);
+      border-top: 3px solid var(--orange);
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      box-shadow: 0 18px 48px rgba(0,0,0,0.55);
+      z-index: 600;
+      padding: 32px 36px 36px;
+      animation: megaIn 0.2s ease both;
+    }
+    @keyframes megaIn {
+      from { opacity: 0; transform: translateX(-50%) translateY(-8px); }
+      to   { opacity: 1; transform: translateX(-50%) translateY(0); }
+    }
+    .mega-parent { position: static; }
+    .mega-parent.mega-open .mega-menu { display: block; }
+
+    .mega-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0 32px;
+    }
+    .mega-col {
+      border-right: 1px solid rgba(255,255,255,0.07);
+      padding-right: 24px;
+    }
+    .mega-col:last-child { border-right: none; padding-right: 0; }
+    .mega-col-title {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.72rem;
+      font-weight: 900;
+      letter-spacing: 0.13em;
+      text-transform: uppercase;
+      color: var(--orange);
+      margin-bottom: 14px;
+      padding-bottom: 8px;
+      border-bottom: 2px solid rgba(245,166,35,0.25);
+    }
+    .mega-col ul { display: flex; flex-direction: column; gap: 2px; }
+    .mega-col ul li a {
+      display: block;
+      font-size: 0.78rem;
+      font-weight: 500;
+      color: rgba(255,255,255,0.72);
+      letter-spacing: 0.02em;
+      padding: 6px 8px;
+      border-radius: 4px;
+      transition: background 0.14s, color 0.14s, padding-left 0.14s;
+      text-transform: none;
+    }
+    .mega-col ul li a::before {
+      content: '›';
+      margin-right: 6px;
+      color: var(--orange);
+      font-size: 0.9rem;
+      opacity: 0;
+      transition: opacity 0.14s;
+    }
+    .mega-col ul li a:hover {
+      background: rgba(245,166,35,0.09);
+      color: #fff;
+      padding-left: 12px;
+    }
+    .mega-col ul li a:hover::before { opacity: 1; }
+    /* remove global a::after underline from mega items */
+    .mega-col ul li a::after { display: none !important; }
+
+    /* ── MOBILE NAVBAR ── */
     @media (max-width: 700px) {
       .navbar { padding: 0 18px; height: 56px; }
       .nav-links {
@@ -126,13 +212,54 @@
         position: absolute;
         top: 56px; left: 0; right: 0;
         background: var(--navy);
-        padding: 16px 22px 24px;
-        gap: 18px;
+        padding: 16px 0 20px;
+        gap: 0;
         box-shadow: 0 8px 24px rgba(0,0,0,0.35);
-        z-index: 200;
+        z-index: 600;
+        max-height: calc(100vh - 56px);
+        overflow-y: auto;
       }
       .nav-links.open { display: flex; }
       .nav-hamburger { display: flex; }
+
+      /* regular nav items on mobile */
+      .nav-links > li > a {
+        padding: 13px 22px;
+        border-bottom: 1px solid rgba(255,255,255,0.06);
+        width: 100%;
+      }
+      .nav-links > li > a::after { display: none; }
+
+      /* mega menu: becomes accordion on mobile */
+      .mega-menu {
+        position: static;
+        width: 100%;
+        transform: none;
+        box-shadow: none;
+        border-top: none;
+        border-bottom: none;
+        padding: 0 0 4px;
+        animation: none;
+        background: rgba(255,255,255,0.04);
+        border-left: 3px solid var(--orange);
+        margin: 0 18px;
+        width: calc(100% - 36px);
+      }
+      .mega-parent.mega-open .mega-menu { display: block; }
+
+      .mega-grid {
+        grid-template-columns: 1fr;
+        gap: 0;
+      }
+      .mega-col {
+        border-right: none;
+        border-bottom: 1px solid rgba(255,255,255,0.06);
+        padding: 14px 16px;
+      }
+      .mega-col:last-child { border-bottom: none; }
+      .mega-col-title { font-size: 0.68rem; margin-bottom: 10px; }
+      .mega-col ul li a { font-size: 0.77rem; padding: 5px 6px; }
+      .mega-col ul li a:hover { padding-left: 10px; }
     }
 
     /* ═══════════════════════════════════════════
@@ -1042,11 +1169,70 @@
     </button>
     <ul class="nav-links" id="navLinks">
       <li><a href="#home" onclick="closeNav()">Home</a></li>
-      <li class="nav-dropdown">
-        <a href="#brands" onclick="closeNav()">Products
+
+      <!-- ── MEGA DROPDOWN ── -->
+      <li class="mega-parent" id="megaParent">
+        <a href="#brands" onclick="toggleMega(event)" aria-haspopup="true" aria-expanded="false" id="megaTrigger">
+          Products
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
         </a>
+
+        <div class="mega-menu" id="megaMenu" role="menu">
+          <div class="mega-grid">
+
+            <!-- Col 1 -->
+            <div class="mega-col">
+              <div class="mega-col-title">Automation &amp; Networking</div>
+              <ul>
+                <li><a href="#brands">PLC &amp; HMI</a></li>
+                <li><a href="#brands">PLCC &amp; Industrial PC</a></li>
+                <li><a href="#brands">Ethernet Switches</a></li>
+                <li><a href="#brands">Media Converters &amp; LIU Boxes</a></li>
+                <li><a href="#brands">Profibus (Cables, Connectors, Repeaters, Gateways)</a></li>
+              </ul>
+            </div>
+
+            <!-- Col 2 -->
+            <div class="mega-col">
+              <div class="mega-col-title">Power, Switching &amp; Control</div>
+              <ul>
+                <li><a href="#brands">SMPS (Power Supplies)</a></li>
+                <li><a href="#brands">Switchgears &amp; Thyristors</a></li>
+                <li><a href="#brands">Relays (General, Board, SSR, ELR)</a></li>
+                <li><a href="#brands">Electronic Timers</a></li>
+                <li><a href="#brands">Safety Barriers</a></li>
+              </ul>
+            </div>
+
+            <!-- Col 3 -->
+            <div class="mega-col">
+              <div class="mega-col-title">Motion &amp; Measurement</div>
+              <ul>
+                <li><a href="#brands">VFDs &amp; Electric Motors</a></li>
+                <li><a href="#brands">Servo Motors &amp; Drives</a></li>
+                <li><a href="#brands">Encoders</a></li>
+                <li><a href="#brands">Sensors (Proximity, Photoelectric, Limit)</a></li>
+                <li><a href="#brands">Temperature &amp; Pressure Gauges/Transmitters</a></li>
+              </ul>
+            </div>
+
+            <!-- Col 4 -->
+            <div class="mega-col">
+              <div class="mega-col-title">Mechanical &amp; Hardware</div>
+              <ul>
+                <li><a href="#brands">Bearings</a></li>
+                <li><a href="#brands">Linear Guideways &amp; Ballscrews</a></li>
+                <li><a href="#brands">Solenoid Coils &amp; Valves</a></li>
+                <li><a href="#brands">Tower Lights &amp; Panel Indicators</a></li>
+                <li><a href="#brands">Cable Lugs &amp; Hardware</a></li>
+              </ul>
+            </div>
+
+          </div>
+        </div>
       </li>
+      <!-- ── end MEGA DROPDOWN ── -->
+
       <li><a href="#contact" onclick="closeNav()">Contact</a></li>
     </ul>
   </nav>
@@ -1606,7 +1792,58 @@
     }
     function closeNav() {
       document.getElementById('navLinks').classList.remove('open');
+      closeMega();
     }
+
+    /* ── Mega Menu ── */
+    var megaParent = document.getElementById('megaParent');
+    var megaTrigger = document.getElementById('megaTrigger');
+    var isMobile = function() { return window.innerWidth <= 700; };
+
+    function openMega() {
+      megaParent.classList.add('mega-open');
+      megaTrigger.setAttribute('aria-expanded', 'true');
+    }
+    function closeMega() {
+      megaParent.classList.remove('mega-open');
+      megaTrigger.setAttribute('aria-expanded', 'false');
+    }
+    function toggleMega(e) {
+      // On mobile: toggle accordion; on desktop: just navigate to #brands
+      if (isMobile()) {
+        e.preventDefault();
+        megaParent.classList.contains('mega-open') ? closeMega() : openMega();
+      } else {
+        closeMega();
+        closeNav();
+        // allow default href="#brands" navigation
+      }
+    }
+
+    // Desktop hover
+    megaParent.addEventListener('mouseenter', function() {
+      if (!isMobile()) openMega();
+    });
+    megaParent.addEventListener('mouseleave', function() {
+      if (!isMobile()) closeMega();
+    });
+
+    // Close mega when clicking outside
+    document.addEventListener('click', function(e) {
+      if (!megaParent.contains(e.target) && !document.getElementById('navLinks').contains(e.target)) {
+        closeMega();
+      }
+    });
+
+    // Close mega on Escape
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') { closeMega(); closeMSMEModal(); }
+    });
+
+    // Close mega when any link inside it is clicked
+    document.getElementById('megaMenu').querySelectorAll('a').forEach(function(link) {
+      link.addEventListener('click', function() { closeMega(); closeNav(); });
+    });
 
     /* ── MSME Modal ── */
     let currentZoom = 1;
@@ -1636,9 +1873,6 @@
       document.getElementById('msmeZoomWrap').style.transform = 'scale(' + currentZoom + ')';
       document.getElementById('zoomLabel').textContent = Math.round(currentZoom * 100) + '%';
     }
-    document.addEventListener('keydown', function(e) {
-      if (e.key === 'Escape') closeMSMEModal();
-    });
 
     /* ── Product Slider ── */
     var sliderCurrent = 0;
