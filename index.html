@@ -28,18 +28,19 @@
     ul { list-style: none; }
 
     /* ═══════════════════════════════════════════
-       CSS VARIABLES
+       CSS VARIABLES — Dark Navy + Orange theme
     ═══════════════════════════════════════════ */
     :root {
-      --navy:   #1a3c5e;
-      --green:  #0e6b3f;
-      --accent: #f0a500;
+      --navy:   #0d1b2e;
+      --navy2:  #1a2e4a;
+      --orange: #f5a623;
+      --orange2:#e8950e;
       --light:  #eef3f9;
       --white:  #ffffff;
       --text:   #2d3748;
       --muted:  #6b7280;
       --border: #e2e8f0;
-      --shadow: 0 4px 24px rgba(26,60,94,0.10);
+      --shadow: 0 4px 24px rgba(13,27,46,0.14);
       --radius: 12px;
     }
 
@@ -55,8 +56,8 @@
       align-items: center;
       justify-content: space-between;
       padding: 0 40px;
-      height: 64px;
-      box-shadow: 0 2px 16px rgba(0,0,0,0.18);
+      height: 60px;
+      box-shadow: 0 2px 16px rgba(0,0,0,0.4);
     }
     .nav-logo {
       display: flex;
@@ -64,7 +65,7 @@
       gap: 10px;
     }
     .nav-logo img {
-      height: 42px;
+      height: 38px;
       width: auto;
       border-radius: 6px;
       object-fit: contain;
@@ -72,24 +73,42 @@
     .nav-logo-text {
       color: #fff;
       font-family: 'Montserrat', sans-serif;
-      font-size: 1.05rem;
+      font-size: 1rem;
       font-weight: 800;
       letter-spacing: 0.04em;
       line-height: 1.2;
     }
     .nav-links {
       display: flex;
-      gap: 32px;
+      gap: 36px;
       align-items: center;
     }
     .nav-links a {
       color: rgba(255,255,255,0.82);
-      font-size: 0.88rem;
-      font-weight: 500;
-      letter-spacing: 0.03em;
+      font-size: 0.82rem;
+      font-weight: 700;
+      letter-spacing: 0.09em;
+      text-transform: uppercase;
       transition: color 0.15s;
+      position: relative;
+    }
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -4px; left: 0; right: 0;
+      height: 2px;
+      background: var(--orange);
+      transform: scaleX(0);
+      transition: transform 0.18s;
     }
     .nav-links a:hover { color: #fff; }
+    .nav-links a:hover::after { transform: scaleX(1); }
+    .nav-links .nav-dropdown { position: relative; }
+    .nav-links .nav-dropdown > a::after { display: none; }
+    .nav-links .nav-dropdown > a {
+      display: flex; align-items: center; gap: 4px;
+    }
+    .nav-links .nav-dropdown > a svg { width: 12px; height: 12px; }
     .nav-hamburger {
       display: none;
       background: none;
@@ -99,19 +118,29 @@
       padding: 4px;
     }
     .nav-hamburger svg { width: 26px; height: 26px; }
-    @media (max-width: 640px) {
-      .navbar { padding: 0 20px; }
-      .nav-links { display: none; flex-direction: column; position: absolute; top: 64px; left: 0; right: 0; background: var(--navy); padding: 16px 24px 24px; gap: 18px; box-shadow: 0 8px 24px rgba(0,0,0,0.2); }
+    @media (max-width: 700px) {
+      .navbar { padding: 0 18px; height: 56px; }
+      .nav-links {
+        display: none;
+        flex-direction: column;
+        position: absolute;
+        top: 56px; left: 0; right: 0;
+        background: var(--navy);
+        padding: 16px 22px 24px;
+        gap: 18px;
+        box-shadow: 0 8px 24px rgba(0,0,0,0.35);
+        z-index: 200;
+      }
       .nav-links.open { display: flex; }
       .nav-hamburger { display: flex; }
     }
 
     /* ═══════════════════════════════════════════
-       HERO
+       HERO — dark navy bg, orange accents
     ═══════════════════════════════════════════ */
     .hero {
-      background: linear-gradient(135deg, #0e2744 0%, #1a3c5e 45%, #0e4d2e 100%);
-      min-height: 88vh;
+      background: var(--navy);
+      min-height: 86vh;
       display: flex;
       align-items: center;
       padding: 72px 40px 64px;
@@ -120,10 +149,10 @@
     }
     .hero::before {
       content: '';
-      position: absolute;
-      inset: 0;
-      background: radial-gradient(ellipse at 70% 40%, rgba(14,107,63,0.22) 0%, transparent 60%),
-                  radial-gradient(ellipse at 20% 80%, rgba(26,60,94,0.4) 0%, transparent 55%);
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse at 85% 50%, rgba(245,166,35,0.07) 0%, transparent 55%),
+        radial-gradient(ellipse at 15% 80%, rgba(26,46,74,0.7) 0%, transparent 60%);
     }
     .hero-inner {
       max-width: 1100px;
@@ -138,33 +167,34 @@
     }
     .hero-eyebrow {
       display: inline-block;
-      background: rgba(255,255,255,0.1);
-      border: 1px solid rgba(255,255,255,0.25);
-      color: rgba(255,255,255,0.9);
-      font-size: 0.72rem;
-      font-weight: 700;
-      letter-spacing: 0.14em;
+      background: rgba(245,166,35,0.18);
+      border: 1.5px solid rgba(245,166,35,0.55);
+      color: var(--orange);
+      font-size: 0.68rem;
+      font-weight: 800;
+      letter-spacing: 0.16em;
       text-transform: uppercase;
       padding: 5px 14px;
-      border-radius: 20px;
+      border-radius: 4px;
       margin-bottom: 18px;
     }
     .hero h1 {
       font-family: 'Montserrat', sans-serif;
-      font-size: clamp(1.9rem, 4vw, 3rem);
+      font-size: clamp(2rem, 4vw, 3.2rem);
       font-weight: 900;
       color: #fff;
-      line-height: 1.15;
+      line-height: 1.12;
       margin-bottom: 20px;
       letter-spacing: -0.01em;
+      text-transform: uppercase;
     }
-    .hero h1 span { color: var(--accent); }
+    .hero h1 span { color: var(--orange); }
     .hero-desc {
-      color: rgba(255,255,255,0.78);
-      font-size: 1rem;
-      line-height: 1.75;
-      margin-bottom: 32px;
-      max-width: 500px;
+      color: rgba(255,255,255,0.72);
+      font-size: 0.95rem;
+      line-height: 1.8;
+      margin-bottom: 36px;
+      max-width: 480px;
     }
     .hero-ctas {
       display: flex;
@@ -173,13 +203,14 @@
       margin-bottom: 28px;
     }
     .btn-primary {
-      background: var(--accent);
-      color: #1a1a1a;
-      font-weight: 700;
-      font-size: 0.88rem;
-      letter-spacing: 0.04em;
-      padding: 13px 28px;
-      border-radius: 8px;
+      background: var(--orange);
+      color: #0d1b2e;
+      font-weight: 800;
+      font-size: 0.8rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 14px 30px;
+      border-radius: 4px;
       border: none;
       cursor: pointer;
       transition: opacity 0.18s, transform 0.15s;
@@ -189,36 +220,36 @@
     .btn-outline {
       background: transparent;
       color: #fff;
-      font-weight: 600;
-      font-size: 0.88rem;
-      letter-spacing: 0.04em;
-      padding: 12px 26px;
-      border-radius: 8px;
-      border: 1.5px solid rgba(255,255,255,0.45);
+      font-weight: 700;
+      font-size: 0.8rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 13px 28px;
+      border-radius: 4px;
+      border: 2px solid rgba(255,255,255,0.35);
       cursor: pointer;
       transition: background 0.18s, border-color 0.18s;
       display: inline-block;
     }
-    .btn-outline:hover { background: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.7); }
+    .btn-outline:hover { background: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.65); }
 
-    /* MSME badge inside hero */
     .msme-badge-trigger {
       display: inline-flex;
       align-items: center;
-      gap: 7px;
+      gap: 8px;
       cursor: pointer;
-      background: rgba(255,255,255,0.12);
-      border: 1.5px solid rgba(255,255,255,0.38);
-      color: #fff;
-      font-size: 0.73rem;
+      background: rgba(245,166,35,0.12);
+      border: 1.5px solid rgba(245,166,35,0.42);
+      color: var(--orange);
+      font-size: 0.7rem;
       font-weight: 700;
       letter-spacing: 0.09em;
-      padding: 7px 15px;
-      border-radius: 20px;
+      padding: 7px 16px;
+      border-radius: 4px;
       text-transform: uppercase;
       transition: background 0.18s, transform 0.15s;
     }
-    .msme-badge-trigger:hover { background: rgba(255,255,255,0.22); transform: translateY(-1px); }
+    .msme-badge-trigger:hover { background: rgba(245,166,35,0.22); transform: translateY(-1px); }
     .msme-badge-trigger svg { width: 14px; height: 14px; flex-shrink: 0; }
     .msme-badge-trigger .check-dot {
       width: 7px; height: 7px; border-radius: 50%;
@@ -228,64 +259,78 @@
     }
     @keyframes pulse-dot { 0%,100%{opacity:1} 50%{opacity:0.4} }
 
-    .hero-image-wrap {
-      position: relative;
-    }
+    .hero-image-wrap { position: relative; }
     .hero-image-wrap img {
       width: 100%;
-      border-radius: 16px;
-      box-shadow: 0 24px 64px rgba(0,0,0,0.38);
+      border-radius: 8px;
+      box-shadow: 0 24px 64px rgba(0,0,0,0.55);
     }
     .hero-img-badge {
       position: absolute;
-      bottom: -16px;
-      left: -16px;
-      background: var(--accent);
-      color: #1a1a1a;
-      font-size: 0.7rem;
+      bottom: -14px; left: -14px;
+      background: var(--orange);
+      color: #0d1b2e;
+      font-size: 0.68rem;
       font-weight: 800;
-      letter-spacing: 0.06em;
+      letter-spacing: 0.08em;
       text-transform: uppercase;
       padding: 8px 16px;
-      border-radius: 8px;
-      box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+      border-radius: 4px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.25);
     }
-
     @media (max-width: 860px) {
-      .hero-inner { grid-template-columns: 1fr; gap: 40px; }
+      .hero-inner { grid-template-columns: 1fr; gap: 36px; }
       .hero-image-wrap { display: none; }
-      .hero { padding: 56px 24px 48px; min-height: auto; }
+      .hero { padding: 52px 20px 44px; min-height: auto; }
     }
 
     /* ═══════════════════════════════════════════
-       STATS BAR
+       STATS BAR — orange bg
     ═══════════════════════════════════════════ */
     .stats-bar {
-      background: var(--white);
-      border-bottom: 1px solid var(--border);
-      padding: 28px 40px;
+      background: var(--orange);
+      padding: 22px 40px;
     }
     .stats-inner {
       max-width: 1100px;
       margin: 0 auto;
       display: grid;
       grid-template-columns: repeat(4, 1fr);
-      gap: 20px;
+      gap: 8px;
       text-align: center;
+      align-items: center;
     }
-    .stat-item {}
+    .stat-item {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 6px 0;
+      border-right: 1.5px solid rgba(13,27,46,0.2);
+    }
+    .stat-item:last-child { border-right: none; }
     .stat-num {
       font-family: 'Montserrat', sans-serif;
-      font-size: 2rem;
+      font-size: 1.9rem;
       font-weight: 900;
       color: var(--navy);
       line-height: 1;
     }
-    .stat-num sup { font-size: 1rem; vertical-align: super; }
-    .stat-label { font-size: 0.78rem; color: var(--muted); margin-top: 4px; font-weight: 500; }
+    .stat-num sup { font-size: 0.9rem; vertical-align: super; }
+    .stat-label {
+      font-size: 0.72rem;
+      color: rgba(13,27,46,0.75);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      line-height: 1.3;
+      text-align: left;
+    }
     @media (max-width: 640px) {
       .stats-inner { grid-template-columns: repeat(2, 1fr); }
-      .stats-bar { padding: 20px 20px; }
+      .stats-bar { padding: 18px 18px; }
+      .stat-item { border-right: none; border-bottom: 1.5px solid rgba(13,27,46,0.15); padding: 10px 0; }
+      .stat-item:nth-child(3), .stat-item:nth-child(4) { border-bottom: none; }
     }
 
     /* ═══════════════════════════════════════════
@@ -295,28 +340,24 @@
     .section-inner { max-width: 1100px; margin: 0 auto; }
     .section-tag {
       display: inline-block;
-      font-size: 0.7rem;
-      font-weight: 700;
+      font-size: 0.68rem;
+      font-weight: 800;
       letter-spacing: 0.14em;
       text-transform: uppercase;
-      color: var(--green);
-      background: rgba(14,107,63,0.09);
-      padding: 4px 12px;
-      border-radius: 20px;
-      margin-bottom: 12px;
+      color: var(--orange2);
+      margin-bottom: 10px;
     }
     .section-title {
       font-family: 'Montserrat', sans-serif;
-      font-size: clamp(1.6rem, 3vw, 2.2rem);
+      font-size: clamp(1.7rem, 3.5vw, 2.4rem);
       font-weight: 900;
       color: var(--navy);
       letter-spacing: -0.01em;
+      text-transform: uppercase;
       margin-bottom: 12px;
     }
-    .section-sub { font-size: 0.95rem; color: var(--muted); max-width: 520px; line-height: 1.7; }
-    @media (max-width: 640px) {
-      .section { padding: 56px 20px; }
-    }
+    .section-sub { font-size: 0.93rem; color: var(--muted); max-width: 520px; line-height: 1.75; }
+    @media (max-width: 640px) { .section { padding: 52px 18px; } }
 
     /* ═══════════════════════════════════════════
        BRANDS
@@ -325,7 +366,7 @@
     .brands-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
-      gap: 16px;
+      gap: 14px;
       margin-top: 40px;
     }
     .brand-card {
@@ -333,157 +374,139 @@
       flex-direction: column;
       align-items: center;
       gap: 10px;
-      padding: 24px 16px;
+      padding: 24px 14px;
       background: var(--light);
       border: 1.5px solid var(--border);
+      border-top: 3px solid transparent;
       border-radius: var(--radius);
-      transition: box-shadow 0.18s, transform 0.15s, border-color 0.18s;
+      transition: box-shadow 0.18s, transform 0.15s, border-top-color 0.18s;
       cursor: default;
     }
     .brand-card:hover {
       box-shadow: var(--shadow);
       transform: translateY(-3px);
-      border-color: #bcd1e8;
+      border-top-color: var(--orange);
     }
     .brand-card img {
-      height: 44px;
+      height: 42px;
       width: auto;
       object-fit: contain;
       filter: grayscale(20%);
       transition: filter 0.2s;
     }
     .brand-card:hover img { filter: grayscale(0%); }
-    .brand-card span {
-      font-size: 0.75rem;
-      font-weight: 600;
-      color: var(--text);
-      letter-spacing: 0.02em;
-    }
+    .brand-card span { font-size: 0.74rem; font-weight: 700; color: var(--text); letter-spacing: 0.02em; }
 
     /* ═══════════════════════════════════════════
        WHY CHOOSE US
     ═══════════════════════════════════════════ */
-    #why { background: var(--light); }
-    .why-intro {
-      max-width: 600px;
-      margin-bottom: 48px;
-    }
+    #why { background: var(--navy); }
+    #why .section-tag { color: var(--orange); }
+    #why .section-title { color: #fff; }
+    #why .section-sub { color: rgba(255,255,255,0.62); }
+    .why-intro { max-width: 600px; margin-bottom: 48px; }
     .why-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 20px;
+      gap: 18px;
     }
     .why-card {
-      background: var(--white);
+      background: rgba(255,255,255,0.05);
       border-radius: var(--radius);
-      padding: 28px 24px;
-      border: 1.5px solid var(--border);
+      padding: 26px 22px;
+      border: 1.5px solid rgba(255,255,255,0.1);
+      border-left: 4px solid var(--orange);
       display: flex;
       align-items: flex-start;
       gap: 16px;
-      transition: box-shadow 0.18s, transform 0.15s;
+      transition: background 0.18s, transform 0.15s;
     }
-    .why-card:hover { box-shadow: var(--shadow); transform: translateY(-3px); }
+    .why-card:hover { background: rgba(255,255,255,0.09); transform: translateY(-3px); }
     .why-icon {
       width: 44px; height: 44px; flex-shrink: 0;
-      background: linear-gradient(135deg, var(--navy), var(--green));
-      border-radius: 10px;
+      background: var(--orange);
+      border-radius: 8px;
       display: flex; align-items: center; justify-content: center;
-      color: #fff; font-size: 1.2rem;
+      font-size: 1.2rem; color: var(--navy);
     }
-    .why-card h3 { font-size: 0.92rem; font-weight: 700; color: var(--navy); margin-bottom: 4px; }
-    .why-card p { font-size: 0.82rem; color: var(--muted); line-height: 1.6; }
+    .why-card h3 { font-size: 0.88rem; font-weight: 700; color: #fff; margin-bottom: 5px; text-transform: uppercase; letter-spacing: 0.04em; }
+    .why-card p { font-size: 0.8rem; color: rgba(255,255,255,0.62); line-height: 1.65; }
 
     /* ═══════════════════════════════════════════
        CONTACT SECTION
     ═══════════════════════════════════════════ */
-    #contact { background: var(--white); }
+    #contact { background: var(--light); }
     .contact-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 40px;
+      gap: 36px;
       align-items: start;
       margin-top: 40px;
     }
-    @media (max-width: 768px) {
-      .contact-grid { grid-template-columns: 1fr; gap: 32px; }
-    }
+    @media (max-width: 768px) { .contact-grid { grid-template-columns: 1fr; gap: 28px; } }
 
-    /* Form */
     .contact-form-wrap {
-      background: var(--light);
+      background: var(--white);
       border-radius: var(--radius);
       padding: 32px;
       border: 1.5px solid var(--border);
+      box-shadow: var(--shadow);
     }
-    .contact-form-wrap h3 {
-      font-size: 1.1rem; font-weight: 700; color: var(--navy);
-      margin-bottom: 22px;
-    }
-    .form-row {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 14px;
-      margin-bottom: 14px;
-    }
+    .contact-form-wrap h3 { font-size: 1.05rem; font-weight: 800; color: var(--navy); margin-bottom: 22px; text-transform: uppercase; letter-spacing: 0.04em; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 13px; margin-bottom: 13px; }
     @media (max-width: 500px) { .form-row { grid-template-columns: 1fr; } }
-    .form-group { margin-bottom: 14px; }
-    .form-group label {
-      display: block;
-      font-size: 0.76rem;
-      font-weight: 600;
-      color: var(--text);
-      margin-bottom: 5px;
-      letter-spacing: 0.03em;
-      text-transform: uppercase;
-    }
-    .form-group input,
-    .form-group textarea,
-    .form-group select {
+    .form-group { margin-bottom: 13px; }
+    .form-group label { display: block; font-size: 0.72rem; font-weight: 700; color: var(--text); margin-bottom: 5px; letter-spacing: 0.05em; text-transform: uppercase; }
+    .form-group input, .form-group textarea, .form-group select {
       width: 100%;
-      padding: 10px 14px;
+      padding: 10px 13px;
       border: 1.5px solid var(--border);
-      border-radius: 8px;
-      font-size: 0.88rem;
+      border-radius: 6px;
+      font-size: 0.87rem;
       color: var(--text);
       background: var(--white);
       outline: none;
       font-family: inherit;
       transition: border-color 0.15s, box-shadow 0.15s;
     }
-    .form-group input:focus,
-    .form-group textarea:focus,
-    .form-group select:focus {
-      border-color: var(--navy);
-      box-shadow: 0 0 0 3px rgba(26,60,94,0.1);
+    .form-group input:focus, .form-group textarea:focus, .form-group select:focus {
+      border-color: var(--orange);
+      box-shadow: 0 0 0 3px rgba(245,166,35,0.15);
     }
     .form-group textarea { resize: vertical; min-height: 110px; }
     .btn-form-submit {
       width: 100%;
       padding: 13px;
-      background: linear-gradient(135deg, var(--navy), var(--green));
+      background: var(--navy);
       color: #fff;
       border: none;
-      border-radius: 8px;
-      font-size: 0.9rem;
-      font-weight: 700;
+      border-radius: 6px;
+      font-size: 0.85rem;
+      font-weight: 800;
       cursor: pointer;
-      letter-spacing: 0.04em;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
       font-family: inherit;
-      transition: opacity 0.18s, transform 0.15s;
+      transition: opacity 0.18s, transform 0.15s, background 0.18s;
       margin-top: 4px;
+      position: relative;
+      overflow: hidden;
     }
-    .btn-form-submit:hover { opacity: 0.88; transform: translateY(-1px); }
+    .btn-form-submit::after {
+      content: '';
+      position: absolute; inset: 0;
+      background: var(--orange);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.25s ease;
+      z-index: 0;
+    }
+    .btn-form-submit span { position: relative; z-index: 1; }
+    .btn-form-submit:hover::after { transform: scaleX(1); }
+    .btn-form-submit:hover { color: var(--navy); }
 
-    /* Map column */
-    .contact-map-col {
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
-    }
-    .contact-map-col > h3 {
-      font-size: 1.1rem; font-weight: 700; color: var(--navy);
-    }
+    .contact-map-col { display: flex; flex-direction: column; gap: 14px; }
+    .contact-map-col > h3 { font-size: 1.05rem; font-weight: 800; color: var(--navy); text-transform: uppercase; letter-spacing: 0.04em; }
     .map-frame-wrapper {
       position: relative;
       border-radius: var(--radius);
@@ -493,155 +516,108 @@
       cursor: pointer;
       transition: box-shadow 0.2s;
     }
-    .map-frame-wrapper:hover { box-shadow: 0 8px 32px rgba(26,60,94,0.2); }
-    .map-frame-wrapper iframe {
-      width: 100%; height: 340px;
-      border: none; display: block;
-      pointer-events: none;
-    }
+    .map-frame-wrapper:hover { box-shadow: 0 8px 32px rgba(13,27,46,0.2); }
+    .map-frame-wrapper iframe { width: 100%; height: 320px; border: none; display: block; pointer-events: none; }
     .map-click-layer {
       position: absolute; inset: 0; z-index: 2;
-      display: flex; align-items: flex-end;
-      justify-content: center; padding-bottom: 16px;
-      background: linear-gradient(to top, rgba(0,0,0,0.30) 0%, transparent 55%);
+      display: flex; align-items: flex-end; justify-content: center; padding-bottom: 14px;
+      background: linear-gradient(to top, rgba(0,0,0,0.32) 0%, transparent 55%);
       text-decoration: none;
     }
     .map-open-pill {
-      background: var(--white);
-      color: var(--navy);
-      font-size: 0.78rem;
-      font-weight: 700;
-      padding: 7px 20px;
-      border-radius: 20px;
+      background: var(--white); color: var(--navy);
+      font-size: 0.76rem; font-weight: 800;
+      padding: 7px 20px; border-radius: 4px;
       box-shadow: 0 3px 12px rgba(0,0,0,0.2);
-      letter-spacing: 0.04em;
+      letter-spacing: 0.05em; text-transform: uppercase;
       display: flex; align-items: center; gap: 7px;
       transition: background 0.15s, color 0.15s;
     }
-    .map-click-layer:hover .map-open-pill {
-      background: var(--navy); color: #fff;
-    }
+    .map-click-layer:hover .map-open-pill { background: var(--orange); color: var(--navy); }
     .map-address-pill {
       display: flex; align-items: flex-start; gap: 12px;
-      background: var(--light);
+      background: var(--white);
       border: 1.5px solid var(--border);
-      border-radius: 10px; padding: 12px 16px;
-      font-size: 0.82rem; color: var(--text); line-height: 1.6;
+      border-left: 4px solid var(--orange);
+      border-radius: 8px; padding: 13px 16px;
+      font-size: 0.82rem; color: var(--text); line-height: 1.65;
     }
-    .map-address-pill .pin-icon {
-      font-size: 1.2rem; flex-shrink: 0; margin-top: 1px;
-    }
-
-    /* Contact info list */
-    .contact-info-list {
-      display: flex; flex-direction: column; gap: 12px;
-      margin-top: 4px;
-    }
-    .contact-info-item {
-      display: flex; align-items: center; gap: 12px;
-      font-size: 0.84rem; color: var(--text);
-    }
+    .map-address-pill .pin-icon { font-size: 1.2rem; flex-shrink: 0; margin-top: 1px; }
+    .contact-info-list { display: flex; flex-direction: column; gap: 10px; margin-top: 2px; }
+    .contact-info-item { display: flex; align-items: center; gap: 12px; font-size: 0.83rem; color: var(--text); }
     .contact-info-item .ci-icon {
       width: 36px; height: 36px; flex-shrink: 0;
-      background: linear-gradient(135deg, var(--navy), var(--green));
-      border-radius: 8px;
+      background: var(--navy);
+      border-radius: 6px;
       display: flex; align-items: center; justify-content: center;
-      color: #fff; font-size: 1rem;
+      color: var(--orange); font-size: 1rem;
     }
 
     /* ═══════════════════════════════════════════
        FOOTER
     ═══════════════════════════════════════════ */
     footer {
-      background: #0d1f33;
-      color: rgba(255,255,255,0.7);
+      background: var(--navy);
+      color: rgba(255,255,255,0.65);
       padding: 56px 40px 28px;
     }
-    .footer-inner {
-      max-width: 1100px;
-      margin: 0 auto;
-    }
+    .footer-inner { max-width: 1100px; margin: 0 auto; }
     .footer-top {
       display: grid;
       grid-template-columns: 1.4fr 1fr 1fr;
       gap: 40px;
-      padding-bottom: 40px;
+      padding-bottom: 36px;
       border-bottom: 1px solid rgba(255,255,255,0.1);
-      margin-bottom: 24px;
+      margin-bottom: 22px;
     }
     .footer-brand h2 {
       font-family: 'Montserrat', sans-serif;
-      font-size: 1.2rem;
-      font-weight: 900;
-      color: #fff;
-      letter-spacing: 0.04em;
+      font-size: 1.15rem; font-weight: 900; color: #fff;
+      letter-spacing: 0.06em; text-transform: uppercase;
       margin-bottom: 10px;
     }
-    .footer-brand p { font-size: 0.82rem; line-height: 1.7; max-width: 320px; }
-    .footer-brand .f-msme {
-      margin-top: 16px;
-    }
+    .footer-brand p { font-size: 0.82rem; line-height: 1.72; max-width: 320px; }
+    .footer-brand .f-msme { margin-top: 16px; }
     .footer-col h4 {
-      font-size: 0.78rem; font-weight: 700; letter-spacing: 0.1em;
-      text-transform: uppercase; color: rgba(255,255,255,0.5);
+      font-size: 0.72rem; font-weight: 800; letter-spacing: 0.12em;
+      text-transform: uppercase; color: var(--orange);
       margin-bottom: 14px;
     }
     .footer-col ul { display: flex; flex-direction: column; gap: 9px; }
-    .footer-col ul li a {
-      font-size: 0.83rem;
-      color: rgba(255,255,255,0.68);
-      transition: color 0.15s;
-    }
-    .footer-col ul li a:hover { color: #fff; }
+    .footer-col ul li a { font-size: 0.82rem; color: rgba(255,255,255,0.62); transition: color 0.15s; }
+    .footer-col ul li a:hover { color: var(--orange); }
     .footer-bottom {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      flex-wrap: wrap;
-      gap: 12px;
-      font-size: 0.76rem;
-      color: rgba(255,255,255,0.45);
+      display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: 12px;
+      font-size: 0.74rem; color: rgba(255,255,255,0.38);
     }
     @media (max-width: 768px) {
-      .footer-top { grid-template-columns: 1fr; gap: 28px; }
-      footer { padding: 40px 20px 24px; }
+      .footer-top { grid-template-columns: 1fr; gap: 26px; }
+      footer { padding: 40px 18px 24px; }
     }
 
-    /* ── MSME badge (footer variant) ── */
     .msme-badge-sm {
-      display: inline-flex;
-      align-items: center;
-      gap: 7px;
-      cursor: pointer;
-      background: rgba(255,255,255,0.08);
-      border: 1px solid rgba(255,255,255,0.22);
-      color: rgba(255,255,255,0.85);
-      font-size: 0.7rem;
-      font-weight: 700;
-      letter-spacing: 0.08em;
-      padding: 6px 13px;
-      border-radius: 16px;
-      text-transform: uppercase;
+      display: inline-flex; align-items: center; gap: 7px; cursor: pointer;
+      background: rgba(245,166,35,0.12);
+      border: 1.5px solid rgba(245,166,35,0.38);
+      color: var(--orange);
+      font-size: 0.69rem; font-weight: 700; letter-spacing: 0.08em;
+      padding: 6px 13px; border-radius: 4px; text-transform: uppercase;
       transition: background 0.15s;
     }
-    .msme-badge-sm:hover { background: rgba(255,255,255,0.16); }
+    .msme-badge-sm:hover { background: rgba(245,166,35,0.22); }
     .msme-badge-sm .check-dot {
       width: 7px; height: 7px; border-radius: 50%;
       background: #4ade80; flex-shrink: 0;
       box-shadow: 0 0 5px rgba(74,222,128,0.6);
     }
 
-    /* ── WhatsApp FAB ── */
+    /* WhatsApp FAB */
     .whatsapp-fab {
-      position: fixed;
-      bottom: 28px; right: 28px;
-      z-index: 800;
-      background: #25d366;
-      color: #fff;
-      border-radius: 50px;
-      padding: 12px 20px;
-      font-size: 0.82rem;
-      font-weight: 700;
+      position: fixed; bottom: 26px; right: 26px; z-index: 800;
+      background: #25d366; color: #fff;
+      border-radius: 50px; padding: 12px 20px;
+      font-size: 0.8rem; font-weight: 700;
       display: flex; align-items: center; gap: 8px;
       box-shadow: 0 6px 24px rgba(37,211,102,0.42);
       transition: transform 0.15s, box-shadow 0.15s;
@@ -655,152 +631,217 @@
     }
 
     /* ═══════════════════════════════════════════
-       MSME MODAL
+       MSME MODAL — Real Certificate
     ═══════════════════════════════════════════ */
     #msmeOverlay {
       display: none;
       position: fixed; inset: 0;
-      background: rgba(0,0,0,0.72);
-      backdrop-filter: blur(5px);
+      background: rgba(0,0,0,0.78);
+      backdrop-filter: blur(6px);
       z-index: 9900;
       align-items: center;
       justify-content: center;
-      padding: 16px;
+      padding: 12px;
     }
     #msmeOverlay.open { display: flex; }
-
     #msmeModal {
       position: relative;
       background: #fff;
-      border-radius: 12px;
-      box-shadow: 0 32px 96px rgba(0,0,0,0.48);
-      width: min(720px, 100%);
-      max-height: 92vh;
+      border-radius: 10px;
+      box-shadow: 0 32px 96px rgba(0,0,0,0.55);
+      width: min(740px, 100%);
+      max-height: 94vh;
       overflow: hidden;
       display: flex;
       flex-direction: column;
-      animation: modalIn 0.28s cubic-bezier(.22,.68,0,1.2) both;
+      animation: modalIn 0.26s cubic-bezier(.22,.68,0,1.2) both;
     }
     @keyframes modalIn {
-      from { opacity: 0; transform: scale(0.87) translateY(28px); }
+      from { opacity: 0; transform: scale(0.88) translateY(24px); }
       to   { opacity: 1; transform: scale(1)    translateY(0); }
     }
-
-    /* Modal header */
     .msme-modal-hd {
       display: flex; align-items: center; justify-content: space-between;
-      padding: 15px 22px;
-      background: linear-gradient(100deg, #1a3c5e 0%, #0e6b3f 100%);
+      padding: 14px 22px;
+      background: var(--navy);
       color: #fff; flex-shrink: 0;
+      border-bottom: 3px solid var(--orange);
     }
-    .msme-modal-hd-text h2 {
-      margin: 0; font-size: 0.96rem; font-weight: 800;
-      letter-spacing: 0.05em; line-height: 1.3;
-    }
-    .msme-modal-hd-text p {
-      margin: 2px 0 0; font-size: 0.68rem; opacity: 0.78;
-    }
+    .msme-modal-hd-text h2 { margin: 0; font-size: 0.9rem; font-weight: 900; letter-spacing: 0.06em; line-height: 1.3; text-transform: uppercase; }
+    .msme-modal-hd-text p { margin: 3px 0 0; font-size: 0.66rem; opacity: 0.7; }
     .msme-close-btn {
-      background: rgba(255,255,255,0.16); border: none; color: #fff;
+      background: rgba(255,255,255,0.14); border: none; color: #fff;
       border-radius: 50%; width: 34px; height: 34px; cursor: pointer;
       font-size: 1.25rem; line-height: 34px; text-align: center;
       transition: background 0.15s; flex-shrink: 0;
     }
-    .msme-close-btn:hover { background: rgba(255,255,255,0.32); }
-
-    /* Scroll body */
+    .msme-close-btn:hover { background: rgba(255,255,255,0.28); }
     .msme-scroll { overflow-y: auto; flex: 1; }
 
-    /* Zoom wrapper */
+    /* ── Certificate document — faithful to real GOI cert ── */
     .msme-zoom-wrap {
       transform-origin: top center;
       transition: transform 0.2s ease;
-      padding: 30px 36px 36px;
+      padding: 28px 32px 36px;
     }
-    @media (max-width: 500px) {
-      .msme-zoom-wrap { padding: 18px 16px 24px; }
-    }
+    @media (max-width: 500px) { .msme-zoom-wrap { padding: 16px 14px 24px; } }
 
-    /* Certificate document */
-    .msme-doc {
+    .cert-doc {
       font-family: 'Times New Roman', Georgia, serif;
       color: #111;
-      max-width: 640px;
+      max-width: 660px;
       margin: 0 auto;
+      border: 2px solid #1a3c5e;
+      padding: 28px 30px;
+      background: #fff;
     }
-    .msme-doc-top {
+    @media (max-width: 500px) { .cert-doc { padding: 16px 12px; } }
+
+    /* Top header row */
+    .cert-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 10px;
+      gap: 10px;
+    }
+    .cert-header .emblem-side {
+      font-size: 3.2rem;
+      line-height: 1;
+      flex-shrink: 0;
+    }
+    .cert-header-center {
       text-align: center;
-      border-bottom: 3px double #1a3c5e;
-      padding-bottom: 16px; margin-bottom: 20px;
+      flex: 1;
     }
-    .msme-doc-top .emblem { font-size: 3rem; line-height: 1; }
-    .msme-doc-top .gov { font-size: 0.8rem; font-weight: 700; letter-spacing: 0.08em; color: #1a3c5e; margin-top: 5px; }
-    .msme-doc-top .ministry { font-size: 0.73rem; color: #555; margin-top: 2px; }
-    .msme-doc h1 {
-      text-align: center; font-size: 1.4rem; letter-spacing: 0.06em;
-      margin: 0 0 20px; color: #111; text-transform: uppercase;
-      border-bottom: 1.5px solid #ccc; padding-bottom: 14px;
+    .cert-header-center .hindi { font-size: 0.85rem; font-weight: 700; color: #1a1a1a; line-height: 1.4; }
+    .cert-header-center .eng  { font-size: 0.82rem; font-weight: 700; color: #1a1a1a; line-height: 1.4; }
+    .cert-header-center .ministry { font-size: 0.72rem; color: #333; margin-top: 3px; }
+    .cert-header .msme-logo-side {
+      font-size: 0.55rem; font-weight: 900; color: #1a3c5e;
+      text-align: center; line-height: 1.2;
+      border: 2px solid #1a3c5e;
+      padding: 4px 6px;
+      border-radius: 3px;
+      flex-shrink: 0;
+      letter-spacing: 0.04em;
     }
-
-    /* Rows */
-    .msme-row {
-      display: grid;
-      grid-template-columns: 195px 1fr;
-      gap: 6px 16px;
-      align-items: start;
-      border-bottom: 1px solid #ebebeb;
-      padding: 10px 0;
-      font-size: 0.83rem;
+    .cert-divider {
+      border: none;
+      border-top: 2px solid #1a3c5e;
+      margin: 10px 0;
     }
-    @media (max-width: 480px) { .msme-row { grid-template-columns: 1fr; gap: 3px; } }
-    .msme-row:last-of-type { border-bottom: none; }
-    .msme-label {
-      font-weight: 700; color: #2a2a2a;
-      font-size: 0.76rem; text-transform: uppercase;
-      letter-spacing: 0.05em; padding-top: 1px;
-    }
-    .msme-value { color: #111; }
-    .msme-value strong { color: #0e6b3f; font-size: 0.96rem; }
-
-    /* Privacy blur */
-    .msme-private {
-      filter: blur(4.5px);
-      user-select: none; pointer-events: none;
-      background: #ececec;
-      border-radius: 4px; padding: 1px 5px;
-      display: inline-block; color: #444;
+    .cert-title {
+      text-align: center;
+      font-size: 1.25rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: #000;
+      margin: 12px 0 18px;
+      border-bottom: 1.5px solid #999;
+      padding-bottom: 12px;
     }
 
-    /* Type badge */
-    .msme-type-badge {
-      display: inline-block;
-      background: #0e6b3f; color: #fff;
-      padding: 3px 14px; border-radius: 14px;
-      font-size: 0.78rem; font-weight: 700;
-      letter-spacing: 0.05em; font-family: 'Inter', sans-serif;
+    /* Table rows */
+    .cert-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.82rem;
+    }
+    .cert-table tr td {
+      padding: 7px 10px;
+      vertical-align: top;
+      border: 1px solid #ccc;
+    }
+    .cert-table .lbl {
+      font-weight: 700;
+      color: #111;
+      width: 38%;
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+      background: #f5f7fa;
+    }
+    .cert-table .val { color: #111; background: #fff; }
+
+    /* Highlight row (TRADING) */
+    .cert-highlight {
+      background: #1a3c5e !important;
+      color: #fff !important;
+      text-align: center;
+      font-weight: 700;
+      font-size: 1rem;
+      letter-spacing: 0.06em;
+    }
+    .cert-highlight-sub {
+      background: #1a3c5e !important;
+      color: #fff !important;
+      text-align: center;
+      font-size: 0.72rem;
+      font-style: italic;
     }
 
-    /* NIC table */
-    .msme-nic-table {
-      width: 100%; border-collapse: collapse;
-      font-size: 0.76rem; margin-top: 6px;
+    /* Inner sub-table */
+    .cert-inner-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.76rem;
       font-family: 'Inter', sans-serif;
     }
-    .msme-nic-table th {
+    .cert-inner-table th {
       background: #1a3c5e; color: #fff;
-      padding: 6px 9px; text-align: left; font-weight: 600;
+      padding: 5px 8px; text-align: left; font-weight: 700;
+      font-size: 0.71rem;
     }
-    .msme-nic-table td {
-      padding: 6px 9px; border: 1px solid #dde; vertical-align: top;
+    .cert-inner-table td {
+      padding: 5px 8px;
+      border: 1px solid #ccc;
+      vertical-align: top;
+      font-size: 0.71rem;
     }
-    .msme-nic-table tr:nth-child(even) td { background: #f5f8fc; }
+    .cert-inner-table tr:nth-child(even) td { background: #f5f8fc; }
+
+    /* Privacy blur */
+    .priv {
+      filter: blur(5px);
+      user-select: none;
+      pointer-events: none;
+      display: inline-block;
+    }
+
+    /* Disclaimer */
+    .cert-footer-note {
+      font-size: 0.66rem;
+      color: #666;
+      margin-top: 16px;
+      line-height: 1.65;
+      font-family: 'Inter', sans-serif;
+      text-align: center;
+      border-top: 1px solid #ddd;
+      padding-top: 12px;
+    }
+    .cert-footer-note a { color: #1a3c5e; text-decoration: underline; }
+
+    /* Contact footer */
+    .cert-contact-box {
+      margin-top: 14px;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.72rem;
+      border: 1px solid #ccc;
+      padding: 10px 14px;
+      background: #f9fbff;
+    }
+    .cert-contact-box strong { display: block; margin-bottom: 6px; font-size: 0.78rem; color: #111; }
+    .cert-contact-box .cc-row { display: flex; align-items: baseline; gap: 8px; margin-bottom: 4px; }
+    .cert-contact-box .cc-label { font-weight: 700; min-width: 30px; }
 
     /* Disclaimer strip */
     .msme-disclaimer {
       background: #f4f7fb;
       border-top: 1px solid #e4e8ee;
-      padding: 10px 18px;
-      font-size: 0.68rem; color: #777;
+      padding: 9px 16px;
+      font-size: 0.66rem; color: #777;
       text-align: center; line-height: 1.6;
       flex-shrink: 0;
       font-family: 'Inter', sans-serif;
@@ -809,33 +850,29 @@
     /* Zoom controls */
     .msme-zoom-bar {
       display: flex; align-items: center; justify-content: center;
-      gap: 10px; padding: 10px 18px;
-      background: rgba(255,255,255,0.97);
+      gap: 10px; padding: 10px 16px;
+      background: #fff;
       border-top: 1px solid #e8edf2;
-      backdrop-filter: blur(6px); flex-shrink: 0;
+      flex-shrink: 0;
     }
     .zoom-btn {
-      width: 36px; height: 36px; border-radius: 50%;
-      border: 2px solid #1a3c5e; background: #fff; color: #1a3c5e;
-      font-size: 1.25rem; font-weight: 700; cursor: pointer;
+      width: 34px; height: 34px; border-radius: 50%;
+      border: 2px solid var(--navy); background: #fff; color: var(--navy);
+      font-size: 1.2rem; font-weight: 700; cursor: pointer;
       display: flex; align-items: center; justify-content: center;
       transition: background 0.14s, color 0.14s; line-height: 1;
       font-family: inherit;
     }
-    .zoom-btn:hover { background: #1a3c5e; color: #fff; }
-    #zoomLabel {
-      font-size: 0.8rem; font-weight: 600; color: #444;
-      min-width: 46px; text-align: center;
-      font-family: 'Inter', sans-serif;
-    }
+    .zoom-btn:hover { background: var(--navy); color: #fff; }
+    #zoomLabel { font-size: 0.78rem; font-weight: 600; color: #444; min-width: 44px; text-align: center; font-family: 'Inter', sans-serif; }
     .zoom-reset {
-      font-size: 0.73rem; font-weight: 600; color: #1a3c5e;
-      background: none; border: 1.5px solid #1a3c5e;
+      font-size: 0.72rem; font-weight: 700; color: var(--navy);
+      background: none; border: 1.5px solid var(--navy);
       border-radius: 14px; padding: 4px 14px; cursor: pointer;
       transition: background 0.14s, color 0.14s;
       font-family: inherit;
     }
-    .zoom-reset:hover { background: #1a3c5e; color: #fff; }
+    .zoom-reset:hover { background: var(--navy); color: #fff; }
 
   </style>
 </head>
@@ -858,8 +895,11 @@
     </button>
     <ul class="nav-links" id="navLinks">
       <li><a href="#home" onclick="closeNav()">Home</a></li>
-      <li><a href="#brands" onclick="closeNav()">Products</a></li>
-      <li><a href="#why" onclick="closeNav()">Why Us</a></li>
+      <li class="nav-dropdown">
+        <a href="#brands" onclick="closeNav()">Products
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+        </a>
+      </li>
       <li><a href="#contact" onclick="closeNav()">Contact</a></li>
     </ul>
   </nav>
@@ -871,7 +911,7 @@
     <div class="hero-inner">
       <div class="hero-content">
         <div class="hero-eyebrow">Trusted Industrial Automation Partner</div>
-        <h1>Trusted Supplier of PLC, VFD, SMPS<br>&amp; <span>Control Solutions</span></h1>
+        <h1>Trusted Supplier of<br><span>PLC, VFD, SMPS</span><br>&amp; Control Solutions</h1>
         <p class="hero-desc">
           Device &amp; Controls is your one-stop supplier of genuine industrial automation products —
           VFDs, PLCs, sensors, and more — from the world's most trusted brands,
@@ -904,19 +944,19 @@
     <div class="stats-inner">
       <div class="stat-item">
         <div class="stat-num">20<sup>+</sup></div>
-        <div class="stat-label">Brand Partners</div>
+        <div class="stat-label">Brand<br>Partners</div>
       </div>
       <div class="stat-item">
         <div class="stat-num">5K<sup>+</sup></div>
-        <div class="stat-label">Products in Stock</div>
+        <div class="stat-label">Products<br>in Stock</div>
       </div>
       <div class="stat-item">
         <div class="stat-num">24<sup>h</sup></div>
-        <div class="stat-label">Quote Turnaround</div>
+        <div class="stat-label">Quote<br>Turnaround</div>
       </div>
       <div class="stat-item">
-        <div class="stat-num"><span style="font-size:1.5rem">PAN</span></div>
-        <div class="stat-label">India Delivery</div>
+        <div class="stat-num" style="font-size:1.5rem;">PAN</div>
+        <div class="stat-label">India<br>Delivery</div>
       </div>
     </div>
   </div>
@@ -1076,7 +1116,7 @@
             <label>Message / Requirement</label>
             <textarea placeholder="Describe your requirement, quantity, brand preference, or any other details…"></textarea>
           </div>
-          <button class="btn-form-submit" type="button">Send Enquiry →</button>
+          <button class="btn-form-submit" type="button"><span>Send Enquiry →</span></button>
         </div>
 
         <!-- RIGHT: Map -->
@@ -1111,7 +1151,7 @@
               <strong>Device &amp; Controls</strong><br />
               160, Jodhpur Gardens,<br />
               Kolkata, West Bengal — 700 045<br />
-              <em style="font-size:0.76rem;color:#888;">Click the map to open directions</em>
+              <em style="font-size:0.74rem;color:#888;">Click the map to open directions</em>
             </span>
           </div>
 
@@ -1142,7 +1182,7 @@
     <div class="footer-inner">
       <div class="footer-top">
         <div class="footer-brand">
-          <h2>DEVICE &amp; CONTROLS</h2>
+          <h2>Device &amp; Controls</h2>
           <p>Your trusted partner for genuine industrial automation products. We supply VFDs, PLCs, sensors, controllers, and more from the world's top brands — delivered fast across India.</p>
           <div class="f-msme">
             <button class="msme-badge-sm" onclick="openMSMEModal()" aria-label="View MSME Certificate">
@@ -1189,7 +1229,7 @@
   </a>
 
   <!-- ═══════════════════════════════════════════
-       MSME MODAL
+       MSME MODAL — REAL GOI CERTIFICATE
   ═══════════════════════════════════════════ -->
   <div id="msmeOverlay" role="dialog" aria-modal="true" aria-label="MSME Registration Certificate" onclick="handleOverlayClick(event)">
     <div id="msmeModal">
@@ -1197,131 +1237,167 @@
       <!-- Header -->
       <div class="msme-modal-hd">
         <div class="msme-modal-hd-text">
-          <h2>UDYAM REGISTRATION CERTIFICATE</h2>
+          <h2>Udyam Registration Certificate</h2>
           <p>Ministry of Micro, Small &amp; Medium Enterprises · Government of India</p>
         </div>
         <button class="msme-close-btn" onclick="closeMSMEModal()" aria-label="Close">&times;</button>
       </div>
 
-      <!-- Scrollable document -->
+      <!-- Scrollable certificate -->
       <div class="msme-scroll">
         <div class="msme-zoom-wrap" id="msmeZoomWrap">
-          <div class="msme-doc">
 
-            <!-- Emblem -->
-            <div class="msme-doc-top">
-              <div class="emblem">🇮🇳</div>
-              <div class="gov">भारत सरकार · Government of India</div>
-              <div class="ministry">सूक्ष्म, लघु एवं मध्यम उद्यम मंत्रालय<br>Ministry of Micro, Small and Medium Enterprises</div>
-            </div>
+          <div class="cert-doc">
 
-            <h1>Udyam Registration Certificate</h1>
-
-            <div class="msme-row">
-              <div class="msme-label">Registration Number</div>
-              <div class="msme-value"><strong>UDYAM-WB-10-0168223</strong></div>
-            </div>
-
-            <div class="msme-row">
-              <div class="msme-label">Name of Enterprise</div>
-              <div class="msme-value"><strong>DEVICE AND CONTROLS</strong></div>
-            </div>
-
-            <div class="msme-row">
-              <div class="msme-label">Type of Enterprise</div>
-              <div class="msme-value">
-                <span class="msme-type-badge">Micro Enterprise</span>
-                &nbsp;<small style="color:#666;">(Classification Year: 2025–26 · Classified: 08/07/2025)</small>
+            <!-- GOI Header -->
+            <div class="cert-header">
+              <div class="emblem-side">🏛️</div>
+              <div class="cert-header-center">
+                <div class="hindi">भारत सरकार</div>
+                <div class="eng">Government of India</div>
+                <div class="ministry">सूक्ष्म, लघु एवं मध्यम उद्यम मंत्रालय<br>Ministry of Micro, Small and Medium Enterprises</div>
               </div>
+              <div class="msme-logo-side">सूक्ष्म<br>लघु एवं<br>मध्यम<br>उद्यम<br>MSME</div>
             </div>
+            <hr class="cert-divider">
 
-            <div class="msme-row">
-              <div class="msme-label">Major Activity</div>
-              <div class="msme-value">
-                <strong>Trading</strong><br>
-                <small style="color:#666;">[For availing benefits of Priority Sector Lending (PSL) only]</small>
-              </div>
-            </div>
+            <div class="cert-title">Udyam Registration Certificate</div>
 
-            <div class="msme-row">
-              <div class="msme-label">Social Category</div>
-              <div class="msme-value">General</div>
-            </div>
+            <table class="cert-table">
+              <tr>
+                <td class="lbl">Udyam Registration Number</td>
+                <td class="val"><strong>UDYAM-WB-10-0168223</strong></td>
+              </tr>
+              <tr>
+                <td class="lbl">Name of Enterprise</td>
+                <td class="val"><strong>DEVICE AND CONTROLS</strong></td>
+              </tr>
+              <tr>
+                <td class="lbl">Type of Enterprise *</td>
+                <td class="val">
+                  <table class="cert-inner-table">
+                    <thead>
+                      <tr>
+                        <th>S.No.</th>
+                        <th>Classification Year</th>
+                        <th>Enterprise Type</th>
+                        <th>Classification Date</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>1</td>
+                        <td>2025-26</td>
+                        <td><strong>Micro</strong></td>
+                        <td>08/07/2025</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </td>
+              </tr>
+              <tr>
+                <td class="lbl">Major Activity</td>
+                <td class="val cert-highlight"><strong>TRADING</strong></td>
+              </tr>
+              <tr>
+                <td class="lbl"></td>
+                <td class="val cert-highlight-sub">[For availing benefits of Priority Sector Lending (PSL) ONLY]</td>
+              </tr>
+              <tr>
+                <td class="lbl">Social Category of Entrepreneur</td>
+                <td class="val">GENERAL</td>
+              </tr>
+              <tr>
+                <td class="lbl">Name of Unit(s)</td>
+                <td class="val">
+                  <table class="cert-inner-table">
+                    <thead><tr><th>S.No.</th><th>Name of Unit(s)</th></tr></thead>
+                    <tbody><tr><td>1</td><td>DEVICE AND CONTROLS</td></tr></tbody>
+                  </table>
+                </td>
+              </tr>
+              <tr>
+                <td class="lbl">Official Address of Enterprise</td>
+                <td class="val">
+                  <table class="cert-inner-table">
+                    <tbody>
+                      <tr><td><strong>Flat/Door/Block No.</strong></td><td>160</td><td><strong>Name of Premises/Building</strong></td><td>JODHPUR GARDENS</td></tr>
+                      <tr><td><strong>Village/Town</strong></td><td>KOLKATA</td><td><strong>Block</strong></td><td>0</td></tr>
+                      <tr><td><strong>Road/Street/Lane</strong></td><td>JODHPUR GARDENS</td><td><strong>City</strong></td><td>KOLKATA</td></tr>
+                      <tr><td><strong>State</strong></td><td>WEST BENGAL</td><td><strong>District</strong></td><td>KOLKATA, Pin 700045</td></tr>
+                      <tr>
+                        <td><strong>Mobile</strong></td>
+                        <td><span class="priv">8240707385</span></td>
+                        <td><strong>Email</strong></td>
+                        <td><span class="priv">NILANJANDUTTA441@GMAIL.COM</span></td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </td>
+              </tr>
+              <tr>
+                <td class="lbl">Date of Incorporation / Registration of Enterprise</td>
+                <td class="val">12/07/2021</td>
+              </tr>
+              <tr>
+                <td class="lbl">Date of Commencement of Production/Business</td>
+                <td class="val">12/07/2021</td>
+              </tr>
+              <tr>
+                <td class="lbl">National Industry Classification Code(s)</td>
+                <td class="val">
+                  <table class="cert-inner-table">
+                    <thead>
+                      <tr>
+                        <th>S.No.</th>
+                        <th>NIC 2 Digit</th>
+                        <th>NIC 4 Digit</th>
+                        <th>NIC 5 Digit</th>
+                        <th>Activity</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>1</td>
+                        <td>47 – Retail trade, except of motor vehicles and motorcycles</td>
+                        <td>4741 – Retail sale of computers, peripheral units, software and telecommunications equipment in specialized stores</td>
+                        <td>47414 – Retail sale of telecommunication equipment</td>
+                        <td>Trading</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </td>
+              </tr>
+              <tr>
+                <td class="lbl">Date of Udyam Registration</td>
+                <td class="val"><strong>08/07/2025</strong></td>
+              </tr>
+            </table>
 
-            <div class="msme-row">
-              <div class="msme-label">Name of Unit(s)</div>
-              <div class="msme-value">1. Device and Controls</div>
-            </div>
-
-            <div class="msme-row">
-              <div class="msme-label">Official Address</div>
-              <div class="msme-value">
-                Flat/Block No. 160, Jodhpur Gardens,<br>
-                Road: Jodhpur Gardens,<br>
-                Kolkata, West Bengal — 700 045, India
-              </div>
-            </div>
-
-            <div class="msme-row">
-              <div class="msme-label">Contact Details</div>
-              <div class="msme-value">
-                Mobile:&nbsp;<span class="msme-private" title="Masked for privacy">+91 82407 XXXXX</span><br>
-                Email:&nbsp;<span class="msme-private" title="Masked for privacy">n••••••dutta441@gmail.com</span>
-              </div>
-            </div>
-
-            <div class="msme-row">
-              <div class="msme-label">Date of Incorporation</div>
-              <div class="msme-value">12 / 07 / 2021</div>
-            </div>
-
-            <div class="msme-row">
-              <div class="msme-label">Commencement of Business</div>
-              <div class="msme-value">12 / 07 / 2021</div>
-            </div>
-
-            <div class="msme-row">
-              <div class="msme-label">Date of Udyam Registration</div>
-              <div class="msme-value">08 / 07 / 2025</div>
-            </div>
-
-            <div class="msme-row">
-              <div class="msme-label">NIC Classification Code(s)</div>
-              <div class="msme-value">
-                <table class="msme-nic-table">
-                  <thead>
-                    <tr>
-                      <th>NIC 2-Digit</th>
-                      <th>NIC 4-Digit</th>
-                      <th>NIC 5-Digit</th>
-                      <th>Activity</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td>47 — Retail trade, except of motor vehicles &amp; motorcycles</td>
-                      <td>4741 — Retail sale of computers, peripheral units, software &amp; telecommunications equipment in specialized stores</td>
-                      <td>47414 — Retail sale of telecommunication equipment</td>
-                      <td>Trading</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <p style="font-size:0.69rem;color:#888;margin-top:22px;text-align:center;line-height:1.65;font-family:'Inter',sans-serif;">
-              * In case of graduation (upward/reverse) of status of an enterprise, the benefit of Government Schemes will be availed as per the provisions of Notification No. S.O. 2119(E) dated 26.06.2020 issued by M/o MSME.<br>
-              <em>This is a computer-generated statement — no signature required. Printed from udyamregistration.gov.in &nbsp;|&nbsp; Date of printing: 29/07/2025</em>
+            <p class="cert-footer-note">
+              * In case of graduation (upward/reverse) of status of an enterprise, the benefit of the Government Schemes will be availed as per the provisions of Notification No. S.O. 2119(E) dated 26.06.2020 issued by the M/o MSME.<br><br>
+              <em>Disclaimer: This is a computer generated statement, no signature required. Printed from <a href="https://udyamregistration.gov.in" target="_blank" rel="noopener">https://udyamregistration.gov.in</a> &amp; Date of printing:- 29/07/2025</em>
             </p>
 
-          </div><!-- /.msme-doc -->
+            <div class="cert-contact-box">
+              <strong>For any assistance, you may contact:</strong>
+              <div class="cc-row"><span class="cc-label">1.</span><span>District Industries Centre: &nbsp;<strong>KOLKATA ( WEST BENGAL )</strong></span></div>
+              <div class="cc-row"><span class="cc-label">2.</span><span>MSME-DFO: &nbsp;<strong>KOLKATA ( WEST BENGAL )</strong></span></div>
+              <div style="margin-top:8px;font-size:0.68rem;color:#555;">
+                Visit: www.msme.gov.in &nbsp;|&nbsp; www.dcmsme.gov.in &nbsp;|&nbsp; www.udyamregistration.gov.in<br>
+                Follow us @minmsme
+              </div>
+            </div>
+
+          </div><!-- /.cert-doc -->
         </div><!-- /.msme-zoom-wrap -->
       </div><!-- /.msme-scroll -->
 
-      <!-- Disclaimer -->
+      <!-- Disclaimer strip -->
       <div class="msme-disclaimer">
         Verified from <strong>udyamregistration.gov.in</strong> &nbsp;·&nbsp;
-        District Industries Centre: KOLKATA (West Bengal) &nbsp;·&nbsp; MSME-DFO: KOLKATA (West Bengal)
+        District Industries Centre: KOLKATA (West Bengal) &nbsp;·&nbsp; MSME-DFO: KOLKATA (West Bengal) &nbsp;·&nbsp;
+        <em>Personal contact details blurred for privacy</em>
       </div>
 
       <!-- Zoom controls -->
